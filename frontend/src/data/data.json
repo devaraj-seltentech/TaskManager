@@ -1,0 +1,600 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@taskflow.com",
+      "password": "admin123",
+      "name": "Admin User"
+    },
+    {
+      "id": 2,
+      "email": "manager@taskflow.com",
+      "password": "manager123",
+      "name": "Project Manager"
+    }
+  ],
+  "employees": [
+    {
+      "id": "emp-1",
+      "name": "Rohit Sharma",
+      "email": "rohit@taskflow.com",
+      "phone": "9876543210",
+      "role": "Frontend Developer",
+      "department": "Engineering",
+      "status": "Active",
+      "joiningDate": "2024-01-10"
+    },
+    {
+      "id": "emp-2",
+      "name": "Priya Patel",
+      "email": "priya@taskflow.com",
+      "phone": "9876543211",
+      "role": "QA Engineer",
+      "department": "Quality Assurance",
+      "status": "Active",
+      "joiningDate": "2024-02-15"
+    },
+    {
+      "id": "emp-3",
+      "name": "Amit Kumar",
+      "email": "amit@taskflow.com",
+      "phone": "9876543212",
+      "role": "Backend Developer",
+      "department": "Engineering",
+      "status": "Active",
+      "joiningDate": "2024-01-20"
+    },
+    {
+      "id": "emp-4",
+      "name": "Sneha Reddy",
+      "email": "sneha@taskflow.com",
+      "phone": "9876543213",
+      "role": "UI/UX Designer",
+      "department": "Design",
+      "status": "Active",
+      "joiningDate": "2024-03-01"
+    },
+    {
+      "id": "emp-5",
+      "name": "Vikram Singh",
+      "email": "vikram@taskflow.com",
+      "phone": "9876543214",
+      "role": "DevOps Engineer",
+      "department": "Engineering",
+      "status": "Active",
+      "joiningDate": "2024-02-28"
+    },
+    {
+      "id": "emp-6",
+      "name": "Neha Gupta",
+      "email": "neha@taskflow.com",
+      "phone": "9876543215",
+      "role": "Product Manager",
+      "department": "Product",
+      "status": "Active",
+      "joiningDate": "2023-11-15"
+    },
+    {
+      "id": "emp-7",
+      "name": "Arjun Mehta",
+      "email": "arjun@taskflow.com",
+      "phone": "9876543216",
+      "role": "Full Stack Developer",
+      "department": "Engineering",
+      "status": "Inactive",
+      "joiningDate": "2023-08-20"
+    }
+  ],
+  "sprints": [
+    {
+      "id": "spr-7",
+      "name": "Sprint 2024-01",
+      "startDate": "2024-01-01",
+      "endDate": "2024-01-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-8",
+      "name": "Sprint 2024-02",
+      "startDate": "2024-02-01",
+      "endDate": "2024-02-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-9",
+      "name": "Sprint 2024-03",
+      "startDate": "2024-03-01",
+      "endDate": "2024-03-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-10",
+      "name": "Sprint 2024-04",
+      "startDate": "2024-04-01",
+      "endDate": "2024-04-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-11",
+      "name": "Sprint 2024-05",
+      "startDate": "2024-05-01",
+      "endDate": "2024-05-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-12",
+      "name": "Sprint 2024-06",
+      "startDate": "2024-06-01",
+      "endDate": "2024-06-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-13",
+      "name": "Sprint 2024-07",
+      "startDate": "2024-07-01",
+      "endDate": "2024-07-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-14",
+      "name": "Sprint 2024-08",
+      "startDate": "2024-08-01",
+      "endDate": "2024-08-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-15",
+      "name": "Sprint 2024-09",
+      "startDate": "2024-09-01",
+      "endDate": "2024-09-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-16",
+      "name": "Sprint 2024-10",
+      "startDate": "2024-10-01",
+      "endDate": "2024-10-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-17",
+      "name": "Sprint 2024-11",
+      "startDate": "2024-11-01",
+      "endDate": "2024-11-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-18",
+      "name": "Sprint 2024-12",
+      "startDate": "2024-12-01",
+      "endDate": "2024-12-14",
+      "description": "Monthly sprint",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-1",
+      "name": "Sprint 1 - Foundation",
+      "startDate": "2025-01-01",
+      "endDate": "2025-01-14",
+      "description": "Authentication & employee module foundation",
+      "status": "In Progress"
+    },
+    {
+      "id": "spr-2",
+      "name": "Sprint 2 - Core Features",
+      "startDate": "2025-01-15",
+      "endDate": "2025-01-28",
+      "description": "Task management and board implementation",
+      "status": "To Be Start"
+    },
+    {
+      "id": "spr-4",
+      "name": "Sprint 3 - Stabilization",
+      "startDate": "2025-02-03",
+      "endDate": "2025-02-16",
+      "description": "Bug fixes and performance improvements",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-5",
+      "name": "Sprint 4 - Enhancements",
+      "startDate": "2025-03-03",
+      "endDate": "2025-03-16",
+      "description": "Feature enhancements and reporting",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-6",
+      "name": "Sprint 5 - Automation",
+      "startDate": "2025-04-01",
+      "endDate": "2025-04-14",
+      "description": "QA automation and deployment hardening",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-19",
+      "name": "Sprint 6 - Improvements",
+      "startDate": "2025-05-01",
+      "endDate": "2025-05-14",
+      "description": "Continuous improvements",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-20",
+      "name": "Sprint 7 - Quality",
+      "startDate": "2025-06-01",
+      "endDate": "2025-06-14",
+      "description": "Quality and release readiness",
+      "status": "Completed"
+    },
+    {
+      "id": "spr-3",
+      "name": "Sprint 0 - Planning",
+      "startDate": "2024-12-15",
+      "endDate": "2024-12-28",
+      "description": "Initial project setup and planning phase",
+      "status": "Completed"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-301",
+      "sprintId": "spr-7",
+      "taskNo": "ST-301",
+      "title": "Monthly delivery (Jan)",
+      "description": "Completed work for the month",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 6,
+      "priority": "High"
+    },
+    {
+      "id": "task-302",
+      "sprintId": "spr-8",
+      "taskNo": "ST-302",
+      "title": "Monthly delivery (Feb)",
+      "description": "Completed work for the month",
+      "status": "Ready to Deployment",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 4,
+      "priority": "Medium"
+    },
+    {
+      "id": "task-303",
+      "sprintId": "spr-9",
+      "taskNo": "ST-303",
+      "title": "Monthly delivery (Mar)",
+      "description": "Completed work for the month",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 7,
+      "priority": "Very High"
+    },
+    {
+      "id": "task-304",
+      "sprintId": "spr-10",
+      "taskNo": "ST-304",
+      "title": "Monthly delivery (Apr)",
+      "description": "Completed work for the month",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 5,
+      "priority": "High"
+    },
+    {
+      "id": "task-305",
+      "sprintId": "spr-11",
+      "taskNo": "ST-305",
+      "title": "Monthly delivery (May)",
+      "description": "Completed work for the month",
+      "status": "Ready to Deployment",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 8,
+      "priority": "Very High"
+    },
+    {
+      "id": "task-306",
+      "sprintId": "spr-12",
+      "taskNo": "ST-306",
+      "title": "Monthly delivery (Jun)",
+      "description": "Completed work for the month",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 3,
+      "priority": "Medium"
+    },
+    {
+      "id": "task-307",
+      "sprintId": "spr-13",
+      "taskNo": "ST-307",
+      "title": "Monthly delivery (Jul)",
+      "description": "Completed work for the month",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 6,
+      "priority": "High"
+    },
+    {
+      "id": "task-308",
+      "sprintId": "spr-14",
+      "taskNo": "ST-308",
+      "title": "Monthly delivery (Aug)",
+      "description": "Completed work for the month",
+      "status": "Ready to Deployment",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 4,
+      "priority": "Medium"
+    },
+    {
+      "id": "task-309",
+      "sprintId": "spr-15",
+      "taskNo": "ST-309",
+      "title": "Monthly delivery (Sep)",
+      "description": "Completed work for the month",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 7,
+      "priority": "High"
+    },
+    {
+      "id": "task-310",
+      "sprintId": "spr-16",
+      "taskNo": "ST-310",
+      "title": "Monthly delivery (Oct)",
+      "description": "Completed work for the month",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 5,
+      "priority": "Medium"
+    },
+    {
+      "id": "task-311",
+      "sprintId": "spr-17",
+      "taskNo": "ST-311",
+      "title": "Monthly delivery (Nov)",
+      "description": "Completed work for the month",
+      "status": "Ready to Deployment",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 6,
+      "priority": "High"
+    },
+    {
+      "id": "task-312",
+      "sprintId": "spr-18",
+      "taskNo": "ST-312",
+      "title": "Monthly delivery (Dec)",
+      "description": "Completed work for the month",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 9,
+      "priority": "Very High"
+    },
+    {
+      "id": "task-101",
+      "sprintId": "spr-1",
+      "taskNo": "ST-101",
+      "title": "Create Login Page",
+      "description": "Build login UI with form validation and auth logic integration",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 3,
+      "priority": "High"
+    },
+    {
+      "id": "task-102",
+      "sprintId": "spr-1",
+      "taskNo": "ST-102",
+      "title": "Implement Authentication Service",
+      "description": "Create auth service with login/logout functionality and session management",
+      "status": "In Code Review",
+      "assignee": "emp-3",
+      "qaOwner": "emp-2",
+      "storyPoints": 5,
+      "priority": "Very High"
+    },
+    {
+      "id": "task-103",
+      "sprintId": "spr-1",
+      "taskNo": "ST-103",
+      "title": "Employee List Component",
+      "description": "Build employee listing with table, search, and pagination",
+      "status": "In Progress",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 5,
+      "priority": "High"
+    },
+    {
+      "id": "task-104",
+      "sprintId": "spr-1",
+      "taskNo": "ST-104",
+      "title": "Add/Edit Employee Form",
+      "description": "Create reusable form component for adding and editing employees",
+      "status": "To Do",
+      "assignee": "emp-4",
+      "qaOwner": "emp-2",
+      "storyPoints": 3,
+      "priority": "Medium"
+    },
+    {
+      "id": "task-105",
+      "sprintId": "spr-1",
+      "taskNo": "ST-105",
+      "title": "Employee Detail Page",
+      "description": "Build employee profile page with assigned tasks and stats",
+      "status": "To Do",
+      "assignee": null,
+      "qaOwner": "emp-2",
+      "storyPoints": 3,
+      "priority": "Medium"
+    },
+    {
+      "id": "task-106",
+      "sprintId": "spr-1",
+      "taskNo": "ST-106",
+      "title": "Setup Navigation & Layout",
+      "description": "Create sidebar navigation and main layout structure",
+      "status": "In QA",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 2,
+      "priority": "High"
+    },
+    {
+      "id": "task-107",
+      "sprintId": "spr-1",
+      "taskNo": "ST-107",
+      "title": "Design System Setup",
+      "description": "Configure Tailwind theme, colors, and component variants",
+      "status": "Ready to Deployment",
+      "assignee": "emp-4",
+      "qaOwner": "emp-2",
+      "storyPoints": 2,
+      "priority": "Very High"
+    },
+    {
+      "id": "task-201",
+      "sprintId": "spr-2",
+      "taskNo": "ST-201",
+      "title": "Kanban Board UI",
+      "description": "Build drag-and-drop Kanban board with columns",
+      "status": "To Do",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 8,
+      "priority": "Very High"
+    },
+    {
+      "id": "task-202",
+      "sprintId": "spr-2",
+      "taskNo": "ST-202",
+      "title": "Sprint Management Module",
+      "description": "Create sprint CRUD operations and lifecycle management",
+      "status": "To Do",
+      "assignee": "emp-3",
+      "qaOwner": "emp-2",
+      "storyPoints": 5,
+      "priority": "High"
+    },
+    {
+      "id": "task-203",
+      "sprintId": "spr-2",
+      "taskNo": "ST-203",
+      "title": "Task Filters & Search",
+      "description": "Implement filtering by assignee, priority, and search functionality",
+      "status": "To Do",
+      "assignee": null,
+      "qaOwner": "emp-2",
+      "storyPoints": 3,
+      "priority": "Medium"
+    },
+    {
+      "id": "task-204",
+      "sprintId": "spr-4",
+      "taskNo": "ST-204",
+      "title": "Fix drag and drop edge cases",
+      "description": "Resolve DnD issues and improve board stability",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 5,
+      "priority": "High"
+    },
+    {
+      "id": "task-205",
+      "sprintId": "spr-5",
+      "taskNo": "ST-205",
+      "title": "Improve task detail UX",
+      "description": "Enhance task detail view and validations",
+      "status": "Ready to Deployment",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 8,
+      "priority": "Very High"
+    },
+    {
+      "id": "task-206",
+      "sprintId": "spr-6",
+      "taskNo": "ST-206",
+      "title": "Add monthly performance chart",
+      "description": "Add monthly story points chart in employee details",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 3,
+      "priority": "Medium"
+    },
+    {
+      "id": "task-207",
+      "sprintId": "spr-19",
+      "taskNo": "ST-207",
+      "title": "Performance tuning",
+      "description": "Tune rendering and optimize heavy lists",
+      "status": "Done",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 5,
+      "priority": "High"
+    },
+    {
+      "id": "task-208",
+      "sprintId": "spr-20",
+      "taskNo": "ST-208",
+      "title": "Release hardening",
+      "description": "Final QA fixes and release preparation",
+      "status": "Ready to Deployment",
+      "assignee": "emp-1",
+      "qaOwner": "emp-2",
+      "storyPoints": 8,
+      "priority": "Very High"
+    },
+    {
+      "id": "task-001",
+      "sprintId": "spr-3",
+      "taskNo": "ST-001",
+      "title": "Project Repository Setup",
+      "description": "Initialize project with Vite, React, and Tailwind",
+      "status": "Done",
+      "assignee": "emp-5",
+      "qaOwner": "emp-2",
+      "storyPoints": 2,
+      "priority": "High"
+    },
+    {
+      "id": "task-002",
+      "sprintId": "spr-3",
+      "taskNo": "ST-002",
+      "title": "Define Data Architecture",
+      "description": "Create data models and service layer structure",
+      "status": "Done",
+      "assignee": "emp-6",
+      "qaOwner": null,
+      "storyPoints": 3,
+      "priority": "Very High"
+    }
+  ]
+}

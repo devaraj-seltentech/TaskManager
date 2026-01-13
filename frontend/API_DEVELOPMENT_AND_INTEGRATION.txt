@@ -1,0 +1,400 @@
+SELten WorkFlow — API Development & Integration Guide
+==================================================
+
+Goal
+----
+Replace the current localStorage + seed-data (src/data/data.json) persistence with a real backend API, and wire the frontend to it.
+
+This doc is intentionally practical:
+- What APIs to build (endpoints + payloads)
+- Where to call them in THIS frontend (file-by-file mapping)
+- What to delete/remove after API integration (data.json + storage/local services)
+
+
+1) Current Frontend Data Flow (what exists today)
+-------------------------------------------------
+Today the app is fully client-side and uses localStorage.
+
+Key files:
+- src/contexts/AuthContext.jsx
+  - calls initializeStorage() from src/services/storageService.js
+  - calls authService.login/logout/getCurrentUser() from src/services/authService.js
+
+- src/contexts/AppContext.jsx
+  - loads and mutates data via localStorage services:
+    - src/services/employeeService.js
+    - src/services/sprintService.js
+    - src/services/taskService.js
+
+- src/services/storageService.js
+  - seeds localStorage from src/data/data.json via initializeStorage()
+  - provides getFromStorage/saveToStorage helpers
+
+Important implication for API integration:
+- The UI mostly reads/mutates data through AppContext + AuthContext.
+- That’s GOOD: we can swap the implementation in contexts/services without rewriting every UI component.
+
+
+2) Data Models (based on current UI + seed data)
+-----------------------------------------------
+These are the fields used by the current app (from src/data/data.json and UI forms).
+
+2.1 User (for login)
+- id: number|string
+- email: string
+- name: string
+- password: string (ONLY in backend; never return to frontend)
+
+2.2 Employee
+- id: string (currently like "emp-1" / "emp-<timestamp>")
+- name: string
+- email: string
+- phone: string
+- role: string
+- department: string
+- status: "Active" | "Inactive"
+- joiningDate: string (YYYY-MM-DD)
+
+2.3 Sprint
+- id: string (currently like "spr-1" / "spr-<timestamp>")
+- name: string
+- startDate: string (YYYY-MM-DD)
+- endDate: string (YYYY-MM-DD)
+- description: string
+- status: "To Be Start" | "In Progress" | "Completed"
+
+2.4 Task
+- id: string (currently like "task-101" / "task-<timestamp>")
+- sprintId: string
+- taskNo: string (IMPORTANT: format "ST-###"; currently generated in frontend)
+- title: string
+- description: string
+- status: one of:
+  - "To Do"
+  - "In Progress"
+  - "In Code Review"
+  - "In QA"
+  - "Ready to Deployment"
+  - "Done"
+- assignee: string|null  (employee id)
+- qaOwner: string|null   (employee id)
+- storyPoints: number
+- priority: "Least" | "Medium" | "High" | "Very High"
+
+
+3) Backend API: What to Build (recommended REST endpoints)
+---------------------------------------------------------
+Base URL example:
+- http://localhost:4000/api
+
+Auth approach (recommended):
+- Use JWT access token (Bearer token) returned by login.
+- Frontend stores token in localStorage (NOT the whole user list).
+
+3.1 Auth endpoints
+
+POST /auth/login
+- Purpose: login with email/password.
+- Request:
+  { "email": "...", "password": "..." }
+- Response 200:
+  { "token": "<jwt>", "user": { "id": "...", "email": "...", "name": "..." } }
+- Response 401:
+  { "message": "Invalid credentials" }
+
+GET /auth/me
+- Purpose: return current logged-in user from token.
+- Headers: Authorization: Bearer <token>
+- Response 200:
+  { "id": "...", "email": "...", "name": "..." }
+- Response 401: invalid/expired token
+
+POST /auth/logout (optional)
+- If you want server-side invalidation.
+- Frontend can also just clear token.
+
+
+3.2 Employees endpoints
+
+GET /employees
+- Supports optional query params:
+  - status=Active|Inactive
+  - q=<search string> (optional)
+- Response 200: Employee[]
+
+GET /employees/:id
+- Response 200: Employee
+- Response 404
+
+POST /employees
+- Request: employee fields (without id)
+- Response 201: Employee
+
+PATCH /employees/:id
+- Request: partial employee fields
+- Response 200: Employee
+
+DELETE /employees/:id
+- Response 204 (preferred) or 200 {success:true}
+
+
+3.3 Sprints endpoints
+
+GET /sprints
+- Supports optional query params:
+  - status=To%20Be%20Start|In%20Progress|Completed
+- Response 200: Sprint[]
+
+GET /sprints/:id
+- Response 200: Sprint
+
+POST /sprints
+- Request: sprint fields (without id)
+- Response 201: Sprint
+
+PATCH /sprints/:id
+- Request: partial sprint fields
+- Response 200: Sprint
+
+POST /sprints/:id/start  (recommended)
+- Purpose: sprint lifecycle action used in Sprint tab.
+- Response 200: Sprint (with status set to "In Progress")
+
+POST /sprints/:id/complete
+- Purpose: used by “Complete Sprint”.
+- Response 200: Sprint (with status set to "Completed")
+
+(Alternative to /start + /complete: allow PATCH /sprints/:id {status:"..."} only. But explicit endpoints help keep business rules centralized.)
+
+
+3.4 Tasks endpoints
+
+GET /tasks
+- Supports optional query params:
+  - sprintId=<id>
+  - status=<status>
+  - assignee=<employeeId>
+  - priority=Least|Medium|High|Very%20High
+  - q=<search string>
+- Response 200: Task[]
+
+GET /tasks/:id
+- Response 200: Task
+
+POST /tasks
+- IMPORTANT: backend should generate BOTH:
+  - id
+  - taskNo in format ST-###
+- Request: fields except id/taskNo
+- Response 201: Task
+
+PATCH /tasks/:id
+- Request: partial task fields (title/description/assignee/qaOwner/storyPoints/priority/status/sprintId)
+- Response 200: Task
+
+PATCH /tasks/:id/status
+- Request: { "status": "In Progress" }
+- Response 200: Task
+
+DELETE /tasks/:id
+- Response 204
+
+
+4) Task Number (ST-###) generation rule
+--------------------------------------
+Current frontend rule (localStorage):
+- Looks at existing tasks’ taskNo (TF-### or ST-###), finds max number, returns ST-(max+1).
+
+Recommended backend rule:
+- Store an integer sequence (taskSequence) OR compute max in DB (sequence is better).
+- Return formatted string: ST-${number padded to 3}.
+- Example: 1 -> ST-001, 12 -> ST-012, 301 -> ST-301.
+
+This prevents duplicates when multiple users create tasks concurrently.
+
+
+5) Frontend Integration: EXACT places to wire API
+-------------------------------------------------
+The cleanest integration is to:
+- Add a fetch/axios API client layer
+- Replace localStorage services usage in contexts
+- Update UI event handlers to await async context actions
+
+5.1 Add these new frontend files (recommended)
+
+A) src/services/apiClient.js
+- Responsibilities:
+  - base URL from env (VITE_API_BASE_URL)
+  - attach Authorization header if token exists
+  - centralized error handling (401 -> force logout)
+
+B) src/services/authApi.js
+- login(email,password)
+- me()
+
+C) src/services/employeeApi.js
+- listEmployees(params)
+- getEmployee(id)
+- createEmployee(payload)
+- updateEmployee(id,payload)
+- deleteEmployee(id)
+
+D) src/services/sprintApi.js
+- listSprints(params)
+- createSprint(payload)
+- updateSprint(id,payload)
+- deleteSprint(id)
+- startSprint(id)
+- completeSprint(id)
+
+E) src/services/taskApi.js
+- listTasks(params)
+- createTask(payload)
+- updateTask(id,payload)
+- updateTaskStatus(id,status)
+- deleteTask(id)
+
+
+5.2 Update AuthContext (src/contexts/AuthContext.jsx)
+
+Current behavior:
+- calls initializeStorage() (seeds localStorage)
+- authService reads users from localStorage
+
+Replace with API behavior:
+- On mount:
+  - if token exists -> call GET /auth/me -> setUser
+  - else setUser(null)
+- login(email,password):
+  - call POST /auth/login
+  - store token (localStorage) + setUser(response.user)
+- logout():
+  - clear token + setUser(null)
+
+After this change:
+- REMOVE initializeStorage() usage from AuthContext.
+- REMOVE authService usage OR rewrite authService to call authApi.
+
+
+5.3 Update AppContext (src/contexts/AppContext.jsx)
+
+Current behavior:
+- refreshEmployees(): employeeService.getEmployees()
+- refreshSprints(): sprintService.getSprints()
+- refreshTasks(): taskService.getTasks()
+- mutations are synchronous and return data immediately
+
+Replace with API behavior:
+- refreshEmployees(): await employeeApi.listEmployees()
+- refreshSprints(): await sprintApi.listSprints()
+- refreshTasks(): await taskApi.listTasks()
+
+Important: these become ASYNC.
+You have two options:
+
+Option A (recommended): Make AppContext actions async
+- addEmployee(data) => await employeeApi.createEmployee(data)
+- updateEmployee(id,data) => await employeeApi.updateEmployee(id,data)
+- deleteEmployee(id) => await employeeApi.deleteEmployee(id)
+- addSprint/updateSprint/deleteSprint/startSprint/completeSprint -> call sprintApi
+- addTask/updateTask/deleteTask/updateTaskStatus -> call taskApi
+
+Option B: Move fetching to React Query
+- Since App.jsx already includes QueryClientProvider, you can migrate screens to useQuery/useMutation.
+- This is a bigger refactor. Start with Option A first unless you want a full react-query migration.
+
+
+5.4 Update UI call sites to await async operations
+
+Because AppContext methods are currently synchronous, the components call them without await.
+After API integration, update these places to "await" the calls and handle loading/errors.
+
+A) src/pages/Employees.jsx
+- Calls addEmployee(data), updateEmployee(id,data), deleteEmployee(id)
+- Change the submit/delete handlers to:
+  - await addEmployee(...) or await updateEmployee(...)
+  - await deleteEmployee(...)
+
+B) src/components/board/KanbanTab.jsx
+- Calls updateTaskStatus(taskId,nextStatus) during drag end
+- Calls addTask(data) and updateTask(id,data) from TaskFormModal onSave
+- Calls completeSprint(sprintId)
+- All should become awaited.
+
+C) src/components/board/SprintTab.jsx
+- Calls addSprint/updateSprint/deleteSprint
+- Calls updateSprint(id,{status:"In Progress"}) for “Start Sprint”
+  - Recommended change: call startSprint(id) API endpoint instead of a raw status patch.
+- Calls addTask/updateTask/deleteTask
+- All should become awaited.
+
+D) src/components/board/HistoryTab.jsx
+- Calls updateSprint/edit + deleteSprint
+- All should become awaited.
+
+E) src/components/board/TaskFormModal.jsx
+- Currently calls onSave(formData) synchronously.
+- If onSave becomes async, update handleSubmit to:
+  - await onSave(formData)
+  - then close modal only on success
+
+
+6) After API integration: Remove localStorage + seed data (explicit list)
+------------------------------------------------------------------------
+Once the backend API is working end-to-end and the frontend is fully using it:
+
+Remove seed data:
+- DELETE src/data/data.json
+
+Remove localStorage seeding & CRUD:
+- DELETE src/services/storageService.js
+  - (or keep ONLY token helpers if you want, but remove initializeStorage/getFromStorage/saveToStorage)
+
+Remove localStorage services:
+- DELETE src/services/employeeService.js
+- DELETE src/services/sprintService.js
+- DELETE src/services/taskService.js
+- DELETE src/services/authService.js
+
+Update imports:
+- src/contexts/AuthContext.jsx should not import initializeStorage/authService anymore
+- src/contexts/AppContext.jsx should not import employeeService/sprintService/taskService anymore
+
+NOTE:
+- Keeping localStorage for ONLY auth token is normal.
+- But do NOT keep the old “data tables” in localStorage after API migration.
+
+
+7) Backend Implementation Notes (so frontend integration is smooth)
+------------------------------------------------------------------
+- Enable CORS for the Vite dev server origin (usually http://localhost:5173).
+- Use consistent error shape:
+  { "message": "..." }
+- Return correct status codes (201 for create, 204 for delete).
+- Validate enums (Sprint status, Task status, Priority).
+- Consider referential integrity:
+  - Prevent deleting an Employee who is assigned to tasks OR automatically set assignee=null.
+  - Prevent deleting a Sprint that still has tasks OR cascade delete tasks.
+
+
+8) Environment configuration (frontend)
+--------------------------------------
+Add to .env (frontend):
+- VITE_API_BASE_URL=http://localhost:4000/api
+
+
+9) Suggested Migration Order (lowest risk)
+-----------------------------------------
+1) Build backend endpoints with the same data shapes as above.
+2) Implement src/services/apiClient.js + authApi.
+3) Update AuthContext to use API (login + me).
+4) Implement employeeApi/sprintApi/taskApi.
+5) Update AppContext to async refresh + async mutations.
+6) Update UI call sites to await async context actions.
+7) Remove localStorage seed + services + src/data/data.json.
+
+
+If you want, I can do the next step too:
+- Add the apiClient/authApi/employeeApi/sprintApi/taskApi files
+- Convert AppContext/AuthContext to use them
+- Update the UI call sites to await async operations

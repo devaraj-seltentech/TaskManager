@@ -1,0 +1,384 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* TaskFlow Design System - Modern SaaS Dashboard */
+
+@layer base {
+  :root {
+    /* Core backgrounds */
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+    
+    /* Card surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    
+    /* Popovers & Dropdowns */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    
+    /* Primary - Professional Blue */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 217 91% 55%;
+    
+    /* Secondary - Slate */
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 222 47% 11%;
+    
+    /* Muted - Subtle backgrounds */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    
+    /* Accent */
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+    
+    /* Destructive - Red */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Borders & Inputs */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
+    
+    /* Radius */
+    --radius: 0.5rem;
+    
+    /* Status Colors - Kanban */
+    --status-todo: 220 14% 96%;
+    --status-todo-border: 220 13% 91%;
+    --status-progress: 217 91% 95%;
+    --status-progress-border: 217 91% 80%;
+    --status-review: 280 67% 95%;
+    --status-review-border: 280 67% 80%;
+    --status-qa: 25 95% 95%;
+    --status-qa-border: 25 95% 75%;
+    --status-ready: 168 76% 95%;
+    --status-ready-border: 168 76% 65%;
+    --status-done: 142 71% 95%;
+    --status-done-border: 142 71% 55%;
+    
+    /* Priority Colors */
+    --priority-very-high: 0 84% 60%;
+    --priority-high: 25 95% 53%;
+    --priority-medium: 217 91% 60%;
+    --priority-least: 48 96% 53%;
+    
+    /* Sprint Status */
+    --sprint-to-start: 220 14% 46%;
+    --sprint-in-progress: 217 91% 60%;
+    --sprint-completed: 142 71% 45%;
+    
+    /* Sidebar */
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 217 91% 60%;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(222 47% 11% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(222 47% 11% / 0.1), 0 2px 4px -2px hsl(222 47% 11% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(222 47% 11% / 0.1), 0 4px 6px -4px hsl(222 47% 11% / 0.1);
+    --shadow-card: 0 1px 3px 0 hsl(222 47% 11% / 0.1), 0 1px 2px -1px hsl(222 47% 11% / 0.1);
+    --shadow-task: 0 1px 2px hsl(222 47% 11% / 0.08);
+    
+    /* Kanban specific */
+    --kanban-column-bg: 210 20% 96%;
+    --kanban-drop-indicator: 217 91% 60%;
+  }
+
+  .dark {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 98%;
+    
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 217 91% 65%;
+    
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 212 27% 84%;
+    
+    --sidebar-background: 222 47% 3%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 33% 12%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 12%;
+    --sidebar-ring: 217 91% 60%;
+    
+    --kanban-column-bg: 222 47% 8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* Task Card Styles */
+  .task-card {
+    @apply bg-card rounded-lg border border-border p-3 cursor-grab active:cursor-grabbing;
+    box-shadow: var(--shadow-task);
+    transition: all 0.15s ease;
+  }
+  
+  .task-card:hover {
+    @apply border-primary/30;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+  
+  .task-card.dragging {
+    @apply opacity-50 shadow-lg;
+    transform: rotate(3deg);
+  }
+  
+  /* Kanban Column */
+  .kanban-column {
+    @apply rounded-xl p-3;
+    background: hsl(var(--kanban-column-bg));
+    min-height: 500px;
+  }
+  
+  /* Status Badge Variants */
+  .status-badge {
+    @apply px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .status-badge-todo {
+    @apply bg-secondary text-secondary-foreground;
+  }
+  
+  .status-badge-progress {
+    background: hsl(var(--status-progress));
+    color: hsl(217 91% 40%);
+  }
+  
+  .status-badge-review {
+    background: hsl(var(--status-review));
+    color: hsl(280 67% 40%);
+  }
+  
+  .status-badge-qa {
+    background: hsl(var(--status-qa));
+    color: hsl(25 95% 35%);
+  }
+  
+  .status-badge-ready {
+    background: hsl(var(--status-ready));
+    color: hsl(168 76% 30%);
+  }
+  
+  .status-badge-done {
+    background: hsl(var(--status-done));
+    color: hsl(142 71% 30%);
+  }
+  
+  /* Priority Badge Variants */
+  .priority-badge {
+    @apply px-2 py-0.5 rounded text-xs font-medium;
+  }
+  
+  .priority-very-high {
+    background: hsl(0 84% 95%);
+    color: hsl(0 84% 45%);
+  }
+  
+  .priority-high {
+    background: hsl(25 95% 95%);
+    color: hsl(25 95% 40%);
+  }
+  
+  .priority-medium {
+    background: hsl(217 91% 95%);
+    color: hsl(217 91% 40%);
+  }
+  
+  .priority-least {
+    background: hsl(48 96% 95%);
+    color: hsl(48 96% 35%);
+  }
+  
+  /* Sprint Status Badges */
+  .sprint-to-start {
+    @apply bg-secondary text-secondary-foreground;
+  }
+  
+  .sprint-in-progress {
+    background: hsl(var(--status-progress));
+    color: hsl(217 91% 40%);
+  }
+  
+  .sprint-completed {
+    background: hsl(var(--status-done));
+    color: hsl(142 71% 30%);
+  }
+  
+  /* Avatar */
+  .avatar-initials {
+    @apply w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold;
+    background: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 50%));
+    color: white;
+  }
+  
+  .avatar-initials-sm {
+    @apply w-6 h-6 text-[10px];
+  }
+  
+  .avatar-initials-lg {
+    @apply w-12 h-12 text-base;
+  }
+  
+  /* Sidebar Navigation */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors;
+    color: hsl(var(--sidebar-foreground) / 0.7);
+  }
+  
+  .nav-item:hover {
+    background: hsl(var(--sidebar-accent));
+    color: hsl(var(--sidebar-foreground));
+  }
+  
+  .nav-item.active {
+    background: hsl(var(--sidebar-primary));
+    color: hsl(var(--sidebar-primary-foreground));
+  }
+  
+  /* Data Table */
+  .data-table {
+    @apply w-full;
+  }
+  
+  .data-table th {
+    @apply text-left text-xs font-medium text-muted-foreground uppercase tracking-wider py-3 px-4 bg-muted/50;
+  }
+  
+  .data-table td {
+    @apply py-3 px-4 border-b border-border;
+  }
+  
+  .data-table tr:hover td {
+    @apply bg-muted/30;
+  }
+  
+  /* Form Input Focus States */
+  .input-focus {
+    @apply focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all;
+  }
+  
+  /* Drag & Drop States */
+  .drop-zone {
+    @apply transition-all duration-200;
+  }
+  
+  .drop-zone.drag-over {
+    @apply bg-primary/5 border-primary/30;
+  }
+  
+  /* Tab Navigation */
+  .tab-nav {
+    @apply flex border-b border-border;
+  }
+  
+  .tab-item {
+    @apply px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent -mb-px transition-colors;
+  }
+  
+  .tab-item:hover {
+    @apply text-foreground;
+  }
+  
+  .tab-item.active {
+    @apply text-primary border-primary;
+  }
+  
+  /* Modal Backdrop */
+  .modal-backdrop {
+    @apply fixed inset-0 bg-foreground/50 backdrop-blur-sm z-50;
+  }
+  
+  /* Empty State */
+  .empty-state {
+    @apply flex flex-col items-center justify-center py-12 text-center;
+  }
+  
+  .empty-state-icon {
+    @apply w-16 h-16 text-muted-foreground/30 mb-4;
+  }
+  
+  /* Loading Skeleton */
+  .skeleton {
+    @apply animate-pulse bg-muted rounded;
+  }
+  
+  /* Sprint Container Box */
+  .sprint-box {
+    @apply bg-card rounded-xl border border-border overflow-hidden;
+    box-shadow: var(--shadow-card);
+  }
+  
+  .sprint-box-header {
+    @apply flex items-center justify-between px-4 py-3 bg-muted/50 border-b border-border;
+  }
+}
+
+/* Custom Scrollbar */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+  }
+}
